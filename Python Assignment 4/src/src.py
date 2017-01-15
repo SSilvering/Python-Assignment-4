@@ -109,7 +109,7 @@ class CalendarEntry:
     
     def __str__(self):
         hours = list(self.tasks.keys())
-        print(hours)
+        return str(hours)
     
     def addTask(self, description, startTime, endTime):
         key = (str(startTime),str(endTime))
