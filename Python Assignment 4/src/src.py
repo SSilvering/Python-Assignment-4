@@ -35,39 +35,16 @@ class Date:
     This class represents an object of type Date.
     """
     def __init__(self, year = 2000, month = 1, day = 1):
-        if check_date(year, month, day): # Checks if the date is correct.
+        if check_date(year, month, day):  # Checks if the date is correct.
             self.year, self.month, self.day = year, month, day
 
         else:
             print("    An incorrect date. \nDefault date has been set.")
             self.year, self.month, self.day = 2000, 1, 1
-    
-    def month_name(self):
-        """ Returns the name of the month of specific date. """
-        if self.month == 1:
-            return 'January'
-        elif self.month == 2:
-            return 'February'
-        elif self.month == 3:
-            return 'March'
-        elif self.month == 4:
-            return 'April'
-        elif self.month == 5:
-            return 'May'
-        elif self.month == 6:
-            return 'June'
-        elif self.month == 7:
-            return 'July'
-        elif self.month == 8:
-            return 'August'
-        elif self.month == 9:
-            return 'September'
-        elif self.month == 10:
-            return 'October'
-        elif self.month == 11:
-            return 'November'
-        elif self.month == 12:
-            return 'December'
+            
+        self.monthName = {1:'January', 2:'February', 3:'March', 4:'April', 5:'May', 
+                          6:'June', 7:'July', 8:'August', 9:'September', 10:'October', 
+                          11:'November', 12:'December'}
     
     def year(self):
         """ This method returns the year of the date. """
@@ -82,15 +59,71 @@ class Date:
         return self.day
     
     def __str__(self):
-        """ This method prints a string representation of this date class. """
-        if self.day == 1: return '{0}st of {1}, {2}'.format(self.day, self.month_name(), self.year)
-        elif self.day == 2:return '{0}nd of {1}, {2}'.format(self.day, self.month_name(), self.year)
-        elif self.day == 3: return '{0}rd of {1}, {2}'.format(self.day, self.month_name(), self.year)
-        else: return '{0}th of {1}, {2}'.format(self.day, self.month_name(), self.year)
+        """ This method prints a string representation of this Date class. """
+        if self.day == 1: return '{0}st of {1}, {2}'.format(self.day, self.monthName[self.month], self.year)
+        elif self.day == 2:return '{0}nd of {1}, {2}'.format(self.day, self.monthName[self.month], self.year)
+        elif self.day == 3: return '{0}rd of {1}, {2}'.format(self.day, self.monthName[self.month], self.year)
+        else: return '{0}th of {1}, {2}'.format(self.day, self.monthName[self.month], self.year)
     
     def __repr__(self):
         """ This method prints an evaluable string representation of this class. """
         return 'Date({0},{1},{2})'.format(self.year, self.month, self.day)
 
 class Time:
+    """
+    This class represents an object of type Time.
+    """
+    def __init__(self, hour = 8, minute = 0):
+        if hour >= 0 and hour <= 23 and minute >= 0 and minute <= 59:
+            self.hour = hour
+            self.minute = minute
+        else:
+            self.hour = 8
+            self.minute = 0
     
+    def __repr__(self):
+        """ This method prints an evaluable string representation of this class. """
+        return 'Time({0},{1})'.format(self.hour, self.minute)
+    
+    def __str__(self):
+        """ This method prints a string representation of this Time class. """
+        return '{0:0=2d}:{1:0=2d}'.format(self.hour, self.minute)
+
+class CalendarEntry:
+    """
+    This class represents a calendar entry and TODO list by hours for specific date.
+    """
+    def __init__(self, year = 2000, month = 1, day = 1):
+        if check_date(year, month, day):  # Checks if the date is correct.
+            self.year, self.month, self.day = year, month, day
+
+        else:
+            print("    An incorrect date. \nDefault date has been set.")
+            self.year, self.month, self.day = 2000, 1, 1
+            
+        self.tasks = {}
+            
+    def __repr__(self):
+        """ This method prints an evaluable string representation of this class. """
+        return 'CalendarEntry({0},{1},{2})'.format(self.year, self.month, self.day)
+    
+    def __str__(self):
+        hours = list(self.tasks.keys())
+        print(hours)
+    
+    def addTask(self, description, startTime, endTime):
+        key = (str(startTime),str(endTime))
+        
+        if key not in self.tasks:
+            self.tasks[key] = description
+        else:
+            return "Another task which wrote for those hours in tasks list. New entry didn't register."
+        
+todo = CalendarEntry(2017, 1, 20)
+t = Time(10,0)
+todo.addTask('PPL lecture', t, Time(13,0))
+todo.addTask('PPL homework#4', Time(14,0), Time(16,0))
+todo.addTask('PPL', Time(8,0), Time(10,0))
+todo.addTask('PPL', Time(16,0), Time(18,0))
+print(todo)
+
