@@ -93,37 +93,31 @@ class CalendarEntry:
     """
     This class represents a calendar entry and TODO list by hours for specific date.
     """
-    def __init__(self, year = 2000, month = 1, day = 1):
-        if check_date(year, month, day):  # Checks if the date is correct.
-            self.year, self.month, self.day = year, month, day
-
-        else:
-            print("    An incorrect date. \nDefault date has been set.")
-            self.year, self.month, self.day = 2000, 1, 1
-            
+    def __init__(self, year, month, day):
+        self.date = Date(year, month, day)  
         self.tasks = {}
             
     def __repr__(self):
         """ This method prints an evaluable string representation of this class. """
-        return 'CalendarEntry({0},{1},{2})'.format(self.year, self.month, self.day)
+        return 'CalendarEntry({0},{1},{2})'.format(str(self.date.year),str(self.date.month),str(self.date.day))
     
     def __str__(self):
-        hours = list(self.tasks.keys())
-        return str(hours)
-    
+        """ This method prints the list of tasks for the specific date. """
+        hours = list(self.tasks.keys())     # Creates a list of hours for tasks.
+        hours.sort()                        # Sorts list of hours in descending order.
+        # TODO: To check if hours.sort() is allow.
+        print('Todo list for {0}:'.format(str(self.date)))
+        for i in range(len(hours) - 1):
+            print('{0}.  {1}-{2} - {3}'.format(i + 1, str(hours[i][0]), str(hours[i][1]), self.tasks[hours[i]]))
+        i += 1
+        return '{0}.  {1}-{2} - {3}'.format(i + 1, str(hours[i][0]), str(hours[i][1]), self.tasks[hours[i]])
+               
     def addTask(self, description, startTime, endTime):
-        key = (str(startTime),str(endTime))
+        key = (str(startTime),str(endTime)) # Creates a tuple from the times for a specific task.
         
-        if key not in self.tasks:
+        if key not in self.tasks:           # Checks if the key exist in the dictionary.
             self.tasks[key] = description
         else:
-            return "Another task which wrote for those hours in tasks list. New entry didn't register."
-        
-todo = CalendarEntry(2017, 1, 20)
-t = Time(10,0)
-todo.addTask('PPL lecture', t, Time(13,0))
-todo.addTask('PPL homework#4', Time(14,0), Time(16,0))
-todo.addTask('PPL', Time(8,0), Time(10,0))
-todo.addTask('PPL', Time(16,0), Time(18,0))
-print(todo)
+            return "Another task which wrote for those hours in tasks list. New entry did not register."
 
+# Question -2-
