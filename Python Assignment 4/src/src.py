@@ -120,4 +120,55 @@ class CalendarEntry:
         else:
             return "Another task which wrote for those hours in tasks list. New entry did not register."
 
+#------------------------------------------------------------------------------ 
 # Question -2-
+
+def make_class(attrs, base=None):
+    """Return a new class (a dispatch dictionary) with given class attributes"""
+
+    # Getter: class attribute (looks in this class, then base)
+    def get(name):
+        if name in attrs: return attrs[name]
+        elif base:        return base['get'](name)
+
+    # Setter: class attribute (always sets in this class)
+    def set(name, value): attrs[name] = value
+
+    # Return a new initialized object instance (a dispatch dictionary)
+    def new(*args):
+        # instance attributes (hides encapsulating function's attrs)
+        attrs = {}
+
+        # Getter: instance attribute (looks in object, then class (binds self if callable))
+        def get(name):
+            if name in attrs:       return attrs[name]
+            else:
+                value = cls['get'](name)
+                if callable(value): return lambda *args: value(obj, *args)
+                else:               return value
+
+        # Setter: instance attribute (always sets in object)
+        def set(name, value):       attrs[name] = value
+
+        # instance dictionary
+        obj = { 'get': get, 'set': set }
+
+        # calls constructor if present
+        init = get('__init__')
+        if init: init(*args)
+
+        return obj
+    
+    # class dictionary
+    cls = { 'get': get, 'set': set, 'new': new }
+    return cls
+
+def make_date_class():
+    pass
+
+def make_time_class():
+    pass
+
+def make_calentry_class():
+    pass
+
