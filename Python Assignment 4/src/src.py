@@ -262,3 +262,75 @@ def make_calentry_class():
 
 #------------------------------------------------------------------------------ 
 # Question -3-    
+
+class Shekel:
+    """
+    
+    """
+    def __init__(self, sum):
+        if sum > 0:
+            self.sum = sum
+        else:
+            print('Incorrect amount. Please try again.') 
+    
+    def amount(self):
+        return self.sum
+    
+    def __str__(self):
+        return '{0}¤'.format(self.sum)
+    
+    def __repr__(self):
+        return 'Shekel({0})'.format(self.sum)
+    
+    def __add__(self, other):
+        return self.amount() + other.amount()
+    
+class Dollar:
+    """
+    
+    """
+    def __init__(self, sum):
+        if sum > 0:
+            self.sum = sum
+        else:
+            print('Incorrect amount. Please try again.') 
+    
+    def amount(self):
+        return self.sum
+    
+    def __str__(self):
+        return '{0}$'.format(self.sum)
+    
+    def __repr__(self):
+        return 'Dollar({0})'.format(self.sum)
+    
+    def __add__(self, other):
+        if 'dollar' in rates:
+            return 'hi'
+            
+        
+         
+
+class Euro:
+    """
+    
+    """
+    def __init__(self, sum):
+        if sum > 0:
+            self.sum = sum
+        else:
+            print('Incorrect amount. Please try again.') 
+    
+    def amount(self):
+        return self.sum
+    
+    def __str__(self):
+        return '{0}€'.format(self.sum)
+    
+    def __repr__(self):
+        return 'Euro({0})'.format(self.sum)
+    
+    def __add__(self, other):
+        pass
+
+rates = {('dollar', '¤'): 3.82,('euro','¤'): 4.07}
