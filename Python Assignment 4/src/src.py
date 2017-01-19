@@ -78,8 +78,10 @@ class Time:
             self.hour = hour
             self.minute = minute
         else:
+            print('Illegal time. Default time has been set.')
             self.hour = 8
             self.minute = 0
+            
     
     def __repr__(self):
         """ This method prints an evaluable string representation of this class. """
@@ -105,7 +107,7 @@ class CalendarEntry:
         """ This method prints the list of tasks for the specific date. """
         hours = list(self.tasks.keys())     # Creates a list of hours for tasks.
         hours.sort()                        # Sorts list of hours in descending order.
-        # TODO: To check if hours.sort() is allow.
+
         print('Todo list for {0}:'.format(str(self.date)))
         for i in range(len(hours) - 1):
             print('{0}.  {1}-{2} - {3}'.format(i + 1, str(hours[i][0]), str(hours[i][1]), self.tasks[hours[i]]))
@@ -113,6 +115,9 @@ class CalendarEntry:
         return '{0}.  {1}-{2} - {3}'.format(i + 1, str(hours[i][0]), str(hours[i][1]), self.tasks[hours[i]])
                
     def addTask(self, description, startTime, endTime):
+        ''' This method adds new task to the specific date. '''
+        
+        # Creates a tuple from the times for a specific task.
         key = (str(startTime),str(endTime)) # Creates a tuple from the times for a specific task.
         
         if key not in self.tasks:           # Checks if the key exist in the dictionary.
@@ -164,11 +169,96 @@ def make_class(attrs, base=None):
     return cls
 
 def make_date_class():
-    pass
+    """
+    Class Date:
+     The Date class is created through a make_date_class function,
+     which has structure similar to a class statement in Python,
+     but concludes with a call to make_class.
+    """
+    
+    ''' Constructor '''
+    def __init__(self, year = 2000, month = 1, day = 1):
+        if check_date(year, month, day):  # Checks if the date is correct.
+            self['set']('year', year)
+            self['set']('month', month)
+            self['set']('day', day)
+        else:
+            print("    An incorrect date. \nDefault date has been set.")
+            self['set']('year', 2000)
+            self['set']('month', 1)
+            self['set']('day', 1)
+    
+    def year(self):
+        self['get']('year')
+        
+    def month(self):
+        self['get']('month')
+    
+    def day(self):
+        self['get']('day')
+    
+    # Creates a dictionary from local variables.
+    cls = { '__init__': __init__, 'year': year, 'month': month, 'day': day }
+    
+    return make_class(cls)
 
 def make_time_class():
-    pass
-
+    """
+    Class Time:
+     The Time class is created through a make_time_class function,
+     which has structure similar to a class statement in Python,
+     but concludes with a call to make_class.
+    """
+    
+    ''' Constructor '''
+    def __init__(self, hour = 8, minute = 0):
+        if hour >= 0 and hour <= 23 and minute >= 0 and minute <= 59:
+            self['set']('hour', hour)
+            self['set']('minute', minute)
+        else:
+            print('Illegal time. Default time has been set.')
+            self['set']('hour', 8)
+            self['set']('minute', 0)
+            
+    def __str__(self):
+        """ This function prints a string representation of this Time class. """
+        return '{0:0=2d}:{1:0=2d}'.format(self['get']('hour'), self['get']('minute'))
+    
+    # Creates a dictionary from local variables.
+    cls = {'__init__':__init__,'__str__':__str__}
+    
+    return make_class(cls)
+            
 def make_calentry_class():
-    pass
+    """
+    Class CalendarEntry:
+     The CalendarEntry class is created through a make_calentry_class function,
+     which has structure similar to a class statement in Python,
+     but concludes with a call to make_class.
+    """
 
+    ''' Constructor '''
+    def __init__(self, year, month, day):
+        dt = make_date_class()
+        dt['get']('__init__')(self, year, month, day) # Composition of Date object to represent the date for tasks.
+        self['set']('tasks', {})                      # Define empty dictionary that will contain the tasks for date.
+    
+    def addTask(self, description, startTime, endTime): 
+        ''' This function adds new task to the specific date. ''' 
+         
+        # Creates a tuple from the times for a specific task.
+        key = (startTime['get']('__str__')(), endTime['get']('__str__')())
+        
+        if key not in self['get']('tasks'):           # Checks if the key exist in the dictionary.
+            self['get']('tasks')[key] = description
+
+        else:
+            return "Another task which wrote for those hours in tasks list. New entry did not register." 
+    
+    # Creates a dictionary from local variables.
+    cls = {'__init__':__init__,'addTask':addTask}
+    
+    return make_class(cls)    
+
+#------------------------------------------------------------------------------ 
+# Question -3-    
