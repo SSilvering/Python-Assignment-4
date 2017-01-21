@@ -265,7 +265,7 @@ def make_calentry_class():
 
 class Shekel:
     """
-    
+    This class represents an instance of the NIS. 
     """
     def __init__(self, sum):
         if sum > 0:
@@ -274,20 +274,26 @@ class Shekel:
             print('Incorrect amount. Please try again.') 
     
     def amount(self):
+        """ This method returns the amount of the instance in NIS. """
         return self.sum
     
     def __str__(self):
+        """ This method prints a string representation of this currency. """
         return '{0}¤'.format(self.sum)
     
     def __repr__(self):
+        """ This method prints an evaluable string representation of this class. """
         return 'Shekel({0})'.format(self.sum)
     
     def __add__(self, other):
-        return self.amount() + other.amount()
+        if not self.amount() == -1 and not other.amount() == -1: 
+            return self.amount() + other.amount()
+        
+        return
     
 class Dollar:
     """
-    
+    This class represents an instance of dollar.
     """
     def __init__(self, sum):
         if sum > 0:
@@ -296,24 +302,30 @@ class Dollar:
             print('Incorrect amount. Please try again.') 
     
     def amount(self):
-        return self.sum
+        """ This method returns the amount of the instance in NIS. """
+        for _ in rates: # Search for conversion value.
+            if _[0] == 'dollar' and _[1] == 'nis':
+                return self.sum * rates[_]
+        
+        return -1       # Else
     
     def __str__(self):
+        """ This method prints a string representation of this currency. """
         return '{0}$'.format(self.sum)
     
     def __repr__(self):
+        """ This method prints an evaluable string representation of this class. """
         return 'Dollar({0})'.format(self.sum)
     
     def __add__(self, other):
-        if 'dollar' in rates:
-            return 'hi'
-            
+        if not self.amount() == -1 and not other.amount() == -1: 
+            return self.amount() + other.amount()
         
+        return          # Else
          
-
 class Euro:
     """
-    
+    This class represents an instance of euros.
     """
     def __init__(self, sum):
         if sum > 0:
@@ -322,15 +334,33 @@ class Euro:
             print('Incorrect amount. Please try again.') 
     
     def amount(self):
-        return self.sum
+        """ This method returns the amount of the instance in NIS. """
+        for _ in rates: # Search for conversion value.
+            if _[0] == 'euro' and _[1] == 'nis':
+                return self.sum * rates[_]
+        
+        return -1       # Else
     
     def __str__(self):
+        """ This method prints a string representation of this currency. """
         return '{0}€'.format(self.sum)
     
     def __repr__(self):
+        """ This method prints an evaluable string representation of this class. """
         return 'Euro({0})'.format(self.sum)
     
     def __add__(self, other):
-        pass
+        if not self.amount() == -1 and not other.amount() == -1: 
+            return self.amount() + other.amount()
+        
+        return          # Else
+    
+def add(x, y):
+    """ This function calculates the sum between two instances and returns it. """ 
+    return x + y
 
-rates = {('dollar', '¤'): 3.82,('euro','¤'): 4.07}
+rates ={('dollar', 'nis'): 3.82,('euro','nis'): 4.07}
+
+#------------------------------------------------------------------------------ 
+# Question -4- 
+
