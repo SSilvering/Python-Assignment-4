@@ -295,7 +295,7 @@ class Dollar:
         
     def amount(self):
         """ This method returns the amount of the instance in NIS. """
-        return self.sum * rates[('dollar','nis')]
+        return self.sum * rates[('dollar', 'nis')]
         
     def __str__(self):
         """ This method prints a string representation of this currency. """
@@ -318,7 +318,7 @@ class Euro:
     
     def amount(self):
         """ This method returns the amount of the instance in NIS. """
-        return self.sum * rates[('euro','nis')]
+        return self.sum * rates[('euro', 'nis')]
     
     def __str__(self):
         """ This method prints a string representation of this currency. """
@@ -348,53 +348,51 @@ def add(x, y):
     elif isShekel(x) and isDollar(y):
         return add_shekel_dollar(x, y)
     elif isShekel(x) and isEuro(y):
-        return add_shekel_euro(x,y)
+        return add_shekel_euro(x, y)
     
     elif isDollar(x) and isDollar(y):
-        return add_dollar_dollar(x,y)
+        return add_dollar_dollar(x, y)
     elif isDollar(x) and isEuro(y):
-        return add_dollar_euro(x,y)
+        return add_dollar_euro(x, y)
     elif isDollar(x) and isShekel(y):
-        return add_shekel_dollar(y,x)
+        return add_shekel_dollar(y, x)
     
     elif isEuro(x) and isEuro(y):
-        return add_euro_euro(x,y)
+        return add_euro_euro(x, y)
     elif isEuro(x) and isDollar(y):
-        return add_dollar_euro(y,x)
+        return add_dollar_euro(y, x)
     elif isEuro(x) and isShekel(y):
-        return add_shekel_euro(y,x)
+        return add_shekel_euro(y, x)
 
-def add_dollar_dollar(d1,d2):
+def add_dollar_dollar(d1, d2):
     """ This function returns the sum of two objects from type of Dollar in NIS. """
-    return round(d1.amount() + d2.amount(),2)
-def add_euro_euro(e1,e2):
+    return round(d1.amount() + d2.amount(), 2)
+def add_euro_euro(e1, e2):
     """ This function returns the sum of two objects from type of Euro in NIS. """
-    return round(e1.amount() + e2.amount(),2)
-def add_shekel_shekel(s1,s2):
+    return round(e1.amount() + e2.amount(), 2)
+def add_shekel_shekel(s1, s2):
     """ This function returns the sum of two objects from type of Shekel. """
-    return round(s1.amount() + s2.amount(),2)
-def add_dollar_euro(d,e):
+    return round(s1.amount() + s2.amount(), 2)
+def add_dollar_euro(d, e):
     """ This function returns the sum of two objects from type of Dollar and Euro in NIS. """
-    return round(d.amount() + e.amount(),2)
-def add_euro_dollar(e,d):
+    return round(d.amount() + e.amount(), 2)
+def add_euro_dollar(e, d):
     """ This function returns the sum of two objects from type of Euro and Dollar in NIS. """
     return add_dollar_euro(e, d)
-def add_dollar_shekel(d,s):
+def add_dollar_shekel(d, s):
     """ This function returns the sum of two objects from type of Dollar and Shekel in NIS. """
-    return round(d.amount() + s.amount(),2)
-def add_shekel_dollar(s,d):
+    return round(d.amount() + s.amount(), 2)
+def add_shekel_dollar(s, d):
     """  This function returns the sum of two objects from type of Skekel and Dollar in NIS. """
     return add_dollar_shekel(d, s)
-def add_euro_shekel(e,s):
+def add_euro_shekel(e, s):
     """ This function returns the sum of two objects from type of Euro and Shekel in NIS. """
-    return round(e.amount() + s.amount(),2)
-def add_shekel_euro(s,e):
+    return round(e.amount() + s.amount(), 2)
+def add_shekel_euro(s, e):
     """ This function returns the sum of two objects from type of Shekel and Euro in NIS. """
     return add_euro_shekel(e, s)
 
-#import add from operator
-
-rates ={('dollar', 'nis'): 3.82,('euro','nis'): 4.07}
+rates = {('dollar', 'nis'): 3.82, ('euro', 'nis'): 4.07}
 
 #------------------------------------------------------------------------------ 
 # Question -4- 
@@ -411,14 +409,14 @@ def add_coins(x, y):
 
 # A Dictionary contains all the functions that use to make add operation between two different types of coins.
 add_coins.implementations = {
-                                ('dollar','euro'): add_dollar_euro, 
-                                ('euro','dollar'): add_euro_dollar,
+                                ('dollar', 'euro'): add_dollar_euro,
+                                ('euro', 'dollar'): add_euro_dollar,
                                 ('dollar', 'dollar'): add_dollar_dollar,
-                                ('dollar','nis'): add_dollar_shekel, 
-                                ('nis','dollar'): add_shekel_dollar,
+                                ('dollar', 'nis'): add_dollar_shekel,
+                                ('nis', 'dollar'): add_shekel_dollar,
                                 ('nis', 'nis'): add_shekel_shekel,
-                                ('euro','nis'): add_euro_shekel, 
-                                ('nis','euro'): add_shekel_euro,
+                                ('euro', 'nis'): add_euro_shekel,
+                                ('nis', 'euro'): add_shekel_euro,
                                 ('euro', 'euro'): add_euro_euro
                             }
 
@@ -427,44 +425,44 @@ def sub_coins(x, y):
     types = (type_tag(x), type_tag(y))
     return sub_coins.implementations[types](x, y)
 
-def sub_dollar_dollar(d1,d2):
+def sub_dollar_dollar(d1, d2):
     """ This function returns the subtract of two objects from type of Dollar in NIS. """
-    return round(d1.amount() - d2.amount(),2)
-def sub_euro_euro(e1,e2):
+    return round(d1.amount() - d2.amount(), 2)
+def sub_euro_euro(e1, e2):
     """ This function returns the subtract of two objects from type of Euro in NIS. """
-    return round(e1.amount() - e2.amount(),2)
-def sub_shekel_shekel(s1,s2):
+    return round(e1.amount() - e2.amount(), 2)
+def sub_shekel_shekel(s1, s2):
     """ This function returns the subtract of two objects from type of Shekel. """
-    return round(s1.amount() - s2.amount(),2)
-def sub_dollar_euro(d,e):
+    return round(s1.amount() - s2.amount(), 2)
+def sub_dollar_euro(d, e):
     """ This function returns the subtract of two objects from type of Dollar and Euro in NIS. """
-    return round(d.amount() - e.amount(),2)
-def sub_euro_dollar(e,d):
+    return round(d.amount() - e.amount(), 2)
+def sub_euro_dollar(e, d):
     """ This function returns the subtract of two objects from type of Euro and Dollar in NIS. """
-    return (-1)*sub_dollar_euro(d, e)
-def sub_dollar_shekel(d,s):
+    return (-1) * sub_dollar_euro(d, e)
+def sub_dollar_shekel(d, s):
     """ This function returns the subtract of two objects from type of Dollar and Shekel in NIS. """
-    return (-1)*round(d.amount() - s.amount(),2)
-def sub_shekel_dollar(s,d):
+    return (-1) * round(d.amount() - s.amount(), 2)
+def sub_shekel_dollar(s, d):
     """  This function returns the subtract of two objects from type of Skekel and Dollar in NIS. """
     return sub_dollar_shekel(d, s)
-def sub_euro_shekel(e,s):
+def sub_euro_shekel(e, s):
     """ This function returns the subtract of two objects from type of Euro and Shekel in NIS. """
-    return (-1)*round(e.amount() - s.amount(),2)
-def sub_shekel_euro(s,e):
+    return (-1) * round(e.amount() - s.amount(), 2)
+def sub_shekel_euro(s, e):
     """ This function returns the subtract of two objects from type of Shekel and Euro in NIS. """
-    return round(sub_euro_shekel(e, s),2)
+    return round(sub_euro_shekel(e, s), 2)
 
 # A Dictionary contains all the functions that use to make subtract operation between two different types of coins.
 sub_coins.implementations = {
-                                ('dollar','euro'): sub_dollar_euro, 
-                                ('euro','dollar'): sub_euro_dollar,
+                                ('dollar', 'euro'): sub_dollar_euro,
+                                ('euro', 'dollar'): sub_euro_dollar,
                                 ('dollar', 'dollar'): sub_dollar_dollar,
-                                ('dollar','nis'): sub_dollar_shekel, 
-                                ('nis','dollar'): sub_shekel_dollar,
+                                ('dollar', 'nis'): sub_dollar_shekel,
+                                ('nis', 'dollar'): sub_shekel_dollar,
                                 ('nis', 'nis'): sub_shekel_shekel,
-                                ('euro','nis'): sub_euro_shekel, 
-                                ('nis','euro'): sub_shekel_euro,
+                                ('euro', 'nis'): sub_euro_shekel,
+                                ('nis', 'euro'): sub_shekel_euro,
                                 ('euro', 'euro'): sub_euro_euro
                             }
 
@@ -472,15 +470,15 @@ def apply(operator, x, y):
     """Apply an operation ('add' or 'sub') to x and y. """
     tags = (type_tag(x), type_tag(y))
     key = (operator, tags)
-    result = apply.implementations[key](x, y) # Returns the result of the operation between the two instances.
+    result = apply.implementations[key](x, y)  # Returns the result of the operation between the two instances.
         
     # Create a new instance depending on the instance that  received from left operand.
     if isShekel(x):
-        return Shekel(round(result,2))
+        return Shekel(round(result, 2))
     if isDollar(x):
-        return Dollar(round(result/rates[('dollar','nis')],2))
+        return Dollar(round(result / rates[('dollar', 'nis')], 2))
     if isEuro(x):
-        return Euro(round(result/rates[('euro','nis')],2)) 
+        return Euro(round(result / rates[('euro', 'nis')], 2)) 
 
 # Put all the addition and subtraction on the arguments to dictionary.
 apply.implementations = {}
@@ -491,3 +489,38 @@ apply.implementations.update({('sub', tags):fn for (tags, fn) in adders})
 
 #------------------------------------------------------------------------------ 
 # Question -5- 
+def dollar_to_shekel(obj):
+    return Shekel(obj.amount())
+def euro_to_shekel(obj):
+    return Shekel(obj.amount())
+def add_shekels(x, y):
+    return Shekel(round(x.amount() + y.amount(), 2))
+def sub_shekels(x, y):
+    return Shekel(round(x.amount() - y.amount(), 2))
+
+coercions = {('dollar', 'nis'): dollar_to_shekel, ('euro', 'nis'): euro_to_shekel}
+
+def coerce_apply(operator, x, y):
+    tx, ty = type_tag(x), type_tag(y)
+    if 'nis' not in (tx, ty):
+        x, tx = Shekel(round(x.amount(), 2)), 'nis'
+    if tx != ty:
+        if (tx, ty) in coercions:
+            tx, x = ty, coercions[(tx, ty)](x)
+        elif (ty, tx) in coercions:
+            ty, y = tx, coercions[(ty, tx)](y)
+        else:
+            return 'No coercion possible.'
+    elif tx == ty and not isShekel(x):
+        x, y = coercions[(tx, 'nis')](x), coercions[(ty, 'nis')](y)
+        tx, ty = 'nis', 'nis'
+        
+    key = (operator, tx)
+    return coerce_apply.implementations[key](x, y)
+
+coerce_apply.implementations = {('add', 'nis'):add_shekels, ('sub', 'nis'):sub_shekels}
+
+print(coercions[('dollar','nis')](Dollar(50)))
+print(coerce_apply('add', Shekel(50), Dollar(20)))
+print(coerce_apply('add', Dollar(50), Euro(20)))
+print(coerce_apply('sub', Dollar(50), Euro(20)))
