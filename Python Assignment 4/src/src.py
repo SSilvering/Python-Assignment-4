@@ -34,7 +34,7 @@ class Date:
     """
     This class represents an object of type Date.
     """
-    def __init__(self, year = 2000, month = 1, day = 1):
+    def __init__(self, year=2000, month=1, day=1):
         if check_date(year, month, day):  # Checks if the date is correct.
             self.year, self.month, self.day = year, month, day
 
@@ -42,8 +42,8 @@ class Date:
             print("    An incorrect date. \nDefault date has been set.")
             self.year, self.month, self.day = 2000, 1, 1
             
-        self.monthName = {1:'January', 2:'February', 3:'March', 4:'April', 5:'May', 
-                          6:'June', 7:'July', 8:'August', 9:'September', 10:'October', 
+        self.monthName = {1:'January', 2:'February', 3:'March', 4:'April', 5:'May',
+                          6:'June', 7:'July', 8:'August', 9:'September', 10:'October',
                           11:'November', 12:'December'}
     
     def year(self):
@@ -73,7 +73,7 @@ class Time:
     """
     This class represents an object of type Time.
     """
-    def __init__(self, hour = 8, minute = 0):
+    def __init__(self, hour=8, minute=0):
         if hour >= 0 and hour <= 23 and minute >= 0 and minute <= 59:
             self.hour = hour
             self.minute = minute
@@ -101,12 +101,12 @@ class CalendarEntry:
             
     def __repr__(self):
         """ This method prints an evaluable string representation of this class. """
-        return 'CalendarEntry({0},{1},{2})'.format(str(self.date.year),str(self.date.month),str(self.date.day))
+        return 'CalendarEntry({0},{1},{2})'.format(str(self.date.year), str(self.date.month), str(self.date.day))
     
     def __str__(self):
         """ This method prints the list of tasks for the specific date. """
-        hours = list(self.tasks.keys())     # Creates a list of hours for tasks.
-        hours.sort()                        # Sorts list of hours in descending order.
+        hours = list(self.tasks.keys())  # Creates a list of hours for tasks.
+        hours.sort()  # Sorts list of hours in descending order.
 
         print('Todo list for {0}:'.format(str(self.date)))
         for i in range(len(hours) - 1):
@@ -118,9 +118,9 @@ class CalendarEntry:
         ''' This method adds new task to the specific date. '''
         
         # Creates a tuple from the times for a specific task.
-        key = (str(startTime),str(endTime)) # Creates a tuple from the times for a specific task.
+        key = (str(startTime), str(endTime))  # Creates a tuple from the times for a specific task.
         
-        if key not in self.tasks:           # Checks if the key exist in the dictionary.
+        if key not in self.tasks:  # Checks if the key exist in the dictionary.
             self.tasks[key] = description
         else:
             return "Another task which wrote for those hours in tasks list. New entry did not register."
@@ -177,7 +177,7 @@ def make_date_class():
     """
     
     ''' Constructor '''
-    def __init__(self, year = 2000, month = 1, day = 1):
+    def __init__(self, year=2000, month=1, day=1):
         if check_date(year, month, day):  # Checks if the date is correct.
             self['set']('year', year)
             self['set']('month', month)
@@ -211,7 +211,7 @@ def make_time_class():
     """
     
     ''' Constructor '''
-    def __init__(self, hour = 8, minute = 0):
+    def __init__(self, hour=8, minute=0):
         if hour >= 0 and hour <= 23 and minute >= 0 and minute <= 59:
             self['set']('hour', hour)
             self['set']('minute', minute)
@@ -225,7 +225,7 @@ def make_time_class():
         return '{0:0=2d}:{1:0=2d}'.format(self['get']('hour'), self['get']('minute'))
     
     # Creates a dictionary from local variables.
-    cls = {'__init__':__init__,'__str__':__str__}
+    cls = {'__init__':__init__, '__str__':__str__}
     
     return make_class(cls)
             
@@ -240,8 +240,8 @@ def make_calentry_class():
     ''' Constructor '''
     def __init__(self, year, month, day):
         dt = make_date_class()
-        dt['get']('__init__')(self, year, month, day) # Composition of Date object to represent the date for tasks.
-        self['set']('tasks', {})                      # Define empty dictionary that will contain the tasks for date.
+        dt['get']('__init__')(self, year, month, day)  # Composition of Date object to represent the date for tasks.
+        self['set']('tasks', {})  # Define empty dictionary that will contain the tasks for date.
     
     def addTask(self, description, startTime, endTime): 
         ''' This function adds new task to the specific date. ''' 
@@ -249,14 +249,14 @@ def make_calentry_class():
         # Creates a tuple from the times for a specific task.
         key = (startTime['get']('__str__')(), endTime['get']('__str__')())
         
-        if key not in self['get']('tasks'):           # Checks if the key exist in the dictionary.
+        if key not in self['get']('tasks'):  # Checks if the key exist in the dictionary.
             self['get']('tasks')[key] = description
 
         else:
             return "Another task which wrote for those hours in tasks list. New entry did not register." 
     
     # Creates a dictionary from local variables.
-    cls = {'__init__':__init__,'addTask':addTask}
+    cls = {'__init__':__init__, 'addTask':addTask}
     
     return make_class(cls)    
 
@@ -527,14 +527,14 @@ coerce_apply.implementations = {('add', 'nis'):add_shekels, ('sub', 'nis'):sub_s
 #------------------------------------------------------------------------------ 
 # Question -6-
 
-def get_reverse_map_iterator(seq, func = None):
+def get_reverse_map_iterator(seq, func=None):
     """
     This function gets a sequence and returns a new sequence in reverse order.
     This function can also gets a function that will operate on each element 
     in the new sequence.
     """
     
-    reverse_map_iterator = [] # Store new reverse sequence in function lexical scope.
+    reverse_map_iterator = []  # Store new reverse sequence in function lexical scope.
     
     index = len(seq)
     
@@ -560,7 +560,7 @@ def get_reverse_map_iterator(seq, func = None):
     def next():
         """ This function returns the next element in that sequence. """
         if has_more():
-            nonlocal index # Gets access for update the original variable.
+            nonlocal index  # Gets access for update the original variable.
             index += 1
             
             try:
@@ -576,14 +576,17 @@ def get_reverse_map_iterator(seq, func = None):
         return index < len(reverse_map_iterator)
     
     # Dispatch dictionary.
-    return {'next':next,'has_more':has_more}
+    return {'next':next, 'has_more':has_more}
 
 #------------------------------------------------------------------------------ 
 # Question -7-
 
 from functools import reduce
 from operator import mul
+from math import sqrt
 
+# Operators are known for our calculator.
+known_operators = ['add', '+', 'sub', '-', 'mul', '*', 'div', '/', 'sqrt', 'V', 'pow', '^']
 
 class Exp(object):
     """A call expression in Calculator."""
@@ -591,7 +594,7 @@ class Exp(object):
         self.operator = operator
         self.operands = operands
     def __repr__(self):
-        return 'Exp({0},{1})'.format(repr(self.operator),repr(self.operands))
+        return 'Exp({0},{1})'.format(repr(self.operator), repr(self.operands))
     def __str__(self):
         operand_strs = ', '.join(map(str, self.operands))
         return '{0}({1})'.format(self.operator, operand_strs)
@@ -603,8 +606,6 @@ def calc_eval(exp):
     elif type(exp) == Exp:
         arguments = list(map(calc_eval, exp.operands))
     return calc_apply(exp.operator, arguments)
-
-known_operators = ['add', 'sub', 'mul', 'div', '+', '-', '*', '/']
 
 def calc_apply(operator, args):
     """Apply the named operator to a list of args."""
@@ -622,11 +623,20 @@ def calc_apply(operator, args):
         if len(args) != 2:
             raise TypeError(operator + ' requires exactly 2 arguments')
         numer, denom = args
-        return numer/denom
-
-    ## EX 7
+        return numer / denom
+    if operator in ('sqrt', 'V'):  # Square root operator, increases the base number by the exponent, by operator 'pow' or '^'.
+        if len(args) != 1:
+            raise TypeError(operator + ' requires exactly 1 arguments')
+        number = args[0]
+        if number < 0:
+            raise ValueError('math domain error')
+        return sqrt(number)
+    if operator in ('pow', '^'):  # Power operator, calculates the square root of the number, by operator 'sqrt' or 'V'.
+        if len(args) != 2:
+            raise TypeError(operator + ' requires exactly 2 arguments')
+        base, exponent = args
+        return pow(base, exponent)
     
-
 def calc_parse(line):
     """Parse a line of calculator input and return an expression tree."""
     tokens = tokenize(line)
@@ -637,7 +647,7 @@ def calc_parse(line):
 
 def tokenize(line):
     """Convert a string into a list of tokens."""
-    spaced = line.replace('(',' ( ').replace(')',' ) ').replace(',', ' , ')
+    spaced = line.replace('(', ' ( ').replace(')', ' ) ').replace(',', ' , ')
     return spaced.split()
 
 def analyze(tokens):
@@ -653,7 +663,6 @@ def analyze(tokens):
     else:
         raise SyntaxError('unexpected ' + token)
 
-
 def analyze_operands(tokens):
     """Analyze a sequence of comma-separated operands."""
     assert_non_empty(tokens)
@@ -663,10 +672,8 @@ def analyze_operands(tokens):
             raise SyntaxError('expected ,')
         operands.append(analyze(tokens))
         assert_non_empty(tokens)
-    tokens.pop(0) # Remove )
+    tokens.pop(0)  # Remove )
     return operands
-
-
 
 def analyze_token(token):
     """Return the value of token if it can be analyzed as a number, or token."""
@@ -678,12 +685,10 @@ def analyze_token(token):
         except (TypeError, ValueError):
             return token
 
-
 def assert_non_empty(tokens):
     """Raise an exception if tokens is empty."""
     if len(tokens) == 0:
         raise SyntaxError('unexpected end of line')
-
 
 def read_eval_print_loop():
     """Run a read-eval-print loop for calculator."""
@@ -691,9 +696,9 @@ def read_eval_print_loop():
         try:
             expression_tree = calc_parse(input('calc> '))
             print(calc_eval(expression_tree))
-        except (SyntaxError, TypeError, ZeroDivisionError) as err:
+        except (SyntaxError, TypeError, ZeroDivisionError, ValueError, ArithmeticError) as err:
             print(type(err).__name__ + ':', err)
-        except (KeyboardInterrupt, EOFError): # <Control>-D, etc.
+        except (KeyboardInterrupt, EOFError):  # <Control>-D, etc.
             print('Calculation completed.')
             return
 
