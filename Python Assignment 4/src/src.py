@@ -547,22 +547,16 @@ def get_reverse_map_iterator(seq, func = None):
                 pass
             else:
                 reverse_map_iterator.append(value)
-                value = 0
     else:
         for _ in seq:
-            index -= 1
-            reverse_map_iterator.append(seq[index])
-            
             index -= 1
             try:
                 value = seq[index]
             except (ArithmeticError, ValueError, TypeError, IndexError):
-                value = 0
                 pass
             else:
                 reverse_map_iterator.append(value)
-    
-    
+       
     def next():
         """ This function returns the next element in that sequence. """
         if has_more():
@@ -589,7 +583,7 @@ def get_reverse_map_iterator(seq, func = None):
 
 from functools import reduce
 from operator import mul
-# from math import sqrt
+
 
 class Exp(object):
     """A call expression in Calculator."""
