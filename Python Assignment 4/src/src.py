@@ -494,33 +494,36 @@ def dollar_to_shekel(obj):
 def euro_to_shekel(obj):
     return Shekel(obj.amount())
 def add_shekels(x, y):
-    return Shekel(round(x.amount() + y.amount(), 2))
+    return Shekel(add_shekel_shekel(x, y))
 def sub_shekels(x, y):
-    return Shekel(round(x.amount() - y.amount(), 2))
+    return Shekel(sub_shekel_shekel(x, y))
 
 coercions = {('dollar', 'nis'): dollar_to_shekel, ('euro', 'nis'): euro_to_shekel}
 
 def coerce_apply(operator, x, y):
+    """ Apply an operation ('add' or 'sub') to x and y. """
+    
     tx, ty = type_tag(x), type_tag(y)
-    if 'nis' not in (tx, ty):
-        x, tx = Shekel(round(x.amount(), 2)), 'nis'
+    
     if tx != ty:
         if (tx, ty) in coercions:
             tx, x = ty, coercions[(tx, ty)](x)
         elif (ty, tx) in coercions:
             ty, y = tx, coercions[(ty, tx)](y)
+        elif 'nis' not in (tx, ty):
+            x, tx = Shekel(round(x.amount(), 2)), 'nis'
         else:
             return 'No coercion possible.'
     elif tx == ty and not isShekel(x):
-        x, y = coercions[(tx, 'nis')](x), coercions[(ty, 'nis')](y)
-        tx, ty = 'nis', 'nis'
+            x, y = coercions[(tx, 'nis')](x), coercions[(ty, 'nis')](y)
+            tx, ty = 'nis', 'nis'
+
         
     key = (operator, tx)
     return coerce_apply.implementations[key](x, y)
 
 coerce_apply.implementations = {('add', 'nis'):add_shekels, ('sub', 'nis'):sub_shekels}
 
-print(coercions[('dollar','nis')](Dollar(50)))
-print(coerce_apply('add', Shekel(50), Dollar(20)))
-print(coerce_apply('add', Dollar(50), Euro(20)))
-print(coerce_apply('sub', Dollar(50), Euro(20)))
+#------------------------------------------------------------------------------ 
+# Question -6-
+
